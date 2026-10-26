@@ -1,0 +1,65 @@
+---
+import { Icon } from 'astro-icon/components';
+import SectionHeading from './SectionHeading.astro';
+import { faq as defaultFaq, whatsappLink } from '@/data/site';
+
+interface Props {
+  items?: { q: string; a: string }[];
+}
+
+const { items = defaultFaq } = Astro.props;
+---
+
+<section class="section" id="faq">
+  <div class="container-page grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+    <div class="lg:sticky lg:top-28 lg:self-start">
+      <SectionHeading
+        eyebrow="Questions fréquentes"
+        title="Les réponses, avant même de nous appeler."
+        lead="Vous ne trouvez pas votre question ? Un conseiller vous répond directement sur WhatsApp."
+      />
+      <a
+        data-reveal
+        href={whatsappLink('Bonjour Proxima, j’ai une question sur mon projet d’immigration.')}
+        target="_blank"
+        rel="noopener"
+        class="btn-ghost mt-8"
+      >
+        <Icon name="lucide:message-circle" class="size-5 text-[#1f9d55]" />
+        Poser ma question
+      </a>
+    </div>
+
+    <div class="divide-y divide-line border-y border-line" data-reveal>
+      {
+        items.map((item) => (
+          <details class="faq group">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-left text-lg font-semibold sm:text-xl [&::-webkit-details-marker]:hidden">
+              {item.q}
+              <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-mist text-blue transition-transform duration-500 group-open:rotate-45">
+                <Icon name="lucide:plus" class="size-5" />
+              </span>
+            </summary>
+            <p class="max-w-2xl pb-7 text-[1.05rem] leading-relaxed text-ink-soft">{item.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq {
+    interpolate-size: allow-keywords;
+  }
+  .faq::details-content {
+    height: 0;
+    overflow: hidden;
+    transition:
+      height 0.5s var(--ease-flight),
+      content-visibility 0.5s allow-discrete;
+  }
+  .faq[open]::details-content {
+    height: auto;
+  }
+</style>

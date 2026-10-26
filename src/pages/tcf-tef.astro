@@ -1,0 +1,185 @@
+---
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import Faq from '@/components/Faq.astro';
+import FinalCta from '@/components/FinalCta.astro';
+import NclcConverter from '@/components/react/NclcConverter';
+import tcfExam from '@/assets/images/tcf-exam.jpg';
+import { faq, whatsappLink } from '@/data/site';
+
+const signup = whatsappLink('Bonjour Proxima, je souhaite m’inscrire à la prépa TCF · TEF à Douala. Quelles sont les prochaines dates ?');
+
+const format = [
+  { value: '3 mois', label: 'de préparation intensive' },
+  { value: '8 max', label: 'élèves par groupe' },
+  { value: 'Deido', label: 'cours en présentiel à Douala' },
+  { value: 'Tous', label: 'les niveaux sont acceptés' },
+];
+
+const skills = [
+  {
+    code: 'CO',
+    title: 'Compréhension orale',
+    text: 'Accents variés, débit rapide, pièges des questions : on entraîne votre oreille aux documents de l’examen.',
+  },
+  {
+    code: 'CE',
+    title: 'Compréhension écrite',
+    text: 'Lire vite et juste : repérage, inférence et gestion du temps sur des textes de difficulté croissante.',
+  },
+  {
+    code: 'EE',
+    title: 'Expression écrite',
+    text: 'Les trois tâches de l’épreuve, des modèles de structure et une correction détaillée de chaque copie.',
+  },
+  {
+    code: 'EO',
+    title: 'Expression orale',
+    text: 'Simulations face à un examinateur, coaching individuel et retour précis sur votre prononciation.',
+  },
+];
+
+const comparison = [
+  ['Organisme', 'France Éducation international', 'CCI Paris Île-de-France'],
+  ['Épreuves', 'CO · CE · EE · EO', 'CO · CE · EE · EO'],
+  ['Accepté par IRCC', 'Oui, Entrée express et autres programmes', 'Oui, Entrée express et autres programmes'],
+  ['Validité pour IRCC', '2 ans', '2 ans'],
+];
+
+const tcfFaq = faq.filter((f) => /TCF|TEF/.test(f.q));
+---
+
+<BaseLayout
+  title="Prépa TCF · TEF à Douala et convertisseur NCLC"
+  description="Préparation TCF Canada et TEF Canada à Douala : 3 mois en présentiel, groupes de 8 maximum. Convertissez gratuitement votre score TCF en niveau NCLC."
+>
+  <PageHero
+    eyebrow="Prépa TCF · TEF · Douala"
+    title="Visez <span class='text-blue'>NCLC 7 et plus</span>, en 3 mois."
+    lead="Le français est souvent le levier le plus rapide pour gagner des points sur Entrée express. Nos formateurs vous préparent aux quatre épreuves, en petit groupe, à Deido."
+    image={tcfExam}
+    imageAlt="Des candidats concentrés passent une épreuve écrite de français en salle d'examen"
+  >
+    <div class="rise mt-9 flex flex-col gap-3 sm:flex-row" style="--d:340ms">
+      <a href={signup} target="_blank" rel="noopener" class="btn-primary">
+        M’inscrire à la prochaine session
+        <Icon name="lucide:arrow-up-right" class="btn-arrow size-5" />
+      </a>
+      <a href="#convertisseur" class="btn-ghost">Convertir mon score TCF</a>
+    </div>
+  </PageHero>
+
+  <section aria-label="Le format de la formation" class="pb-6">
+    <div class="container-page">
+      <dl class="grid grid-cols-2 gap-y-8 border-t border-line pt-10 lg:grid-cols-4">
+        {
+          format.map((f, i) => (
+            <div class="px-2 lg:border-l lg:border-line lg:px-8 lg:first:border-l-0 lg:first:pl-0" data-reveal style={`--reveal-delay:${i * 90}ms`}>
+              <dt class="sr-only">{f.label}</dt>
+              <dd>
+                <span class="display block text-4xl text-blue sm:text-5xl">{f.value}</span>
+                <span class="mt-2 block text-ink-soft">{f.label}</span>
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-page">
+      <SectionHeading
+        eyebrow="Le programme"
+        title="Les quatre épreuves, travaillées une par une."
+        lead="Chaque mois se termine par un examen blanc corrigé : vous voyez vos progrès en niveaux NCLC, pas seulement en impressions."
+      />
+      <div class="mt-12 grid gap-4 sm:grid-cols-2">
+        {
+          skills.map((s, i) => (
+            <article class="group flex gap-5 rounded-[1.75rem] bg-surface p-7 ring-1 ring-line transition-shadow duration-500 hover:shadow-[0_24px_50px_-30px_rgb(10_31_51/0.35)] sm:p-8" data-reveal style={`--reveal-delay:${i * 80}ms`}>
+              <span class="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-night font-mono text-lg font-bold text-sky transition-colors duration-500 group-hover:bg-blue group-hover:text-white">
+                {s.code}
+              </span>
+              <span>
+                <h3 class="display text-xl sm:text-2xl">{s.title}</h3>
+                <p class="mt-2 leading-relaxed text-ink-soft">{s.text}</p>
+              </span>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-surface" id="convertisseur">
+    <div class="container-page">
+      <SectionHeading
+        eyebrow="Outil gratuit"
+        title="Convertisseur TCF Canada → <span class='text-blue'>NCLC</span>"
+        lead="Entrez vos scores TCF Canada : le tableau affiche votre niveau NCLC dans chaque compétence, selon le barème officiel d’IRCC. Entrée express demande au minimum NCLC 7 partout."
+      />
+      <div class="mt-12" data-reveal>
+        <NclcConverter client:visible />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-page grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+      <SectionHeading
+        eyebrow="TCF ou TEF ?"
+        title="Deux examens, un même objectif."
+        lead="IRCC accepte les deux. Nous vous orientons vers celui qui convient le mieux à votre programme, à votre calendrier et à votre profil."
+      />
+      <div class="overflow-hidden rounded-[1.75rem] bg-surface ring-1 ring-line" data-reveal>
+        <table class="w-full text-left">
+          <caption class="sr-only">Comparaison entre le TCF Canada et le TEF Canada</caption>
+          <thead>
+            <tr class="bg-night text-white">
+              <th scope="col" class="p-5 font-mono text-xs font-semibold tracking-[0.16em] text-white/60"><span class="sr-only">Critère</span></th>
+              <th scope="col" class="display p-5 text-lg">TCF Canada</th>
+              <th scope="col" class="display p-5 text-lg">TEF Canada</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-line">
+            {
+              comparison.map(([label, tcf, tef]) => (
+                <tr>
+                  <th scope="row" class="p-5 align-top text-sm font-semibold text-ink-mute">{label}</th>
+                  <td class="p-5 align-top">{tcf}</td>
+                  <td class="p-5 align-top">{tef}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="px-3 sm:px-5" id="inscription">
+    <div class="relative overflow-hidden rounded-[2.25rem] bg-blue text-white">
+      <svg class="pointer-events-none absolute -right-10 -bottom-24 h-[150%] w-auto opacity-25" viewBox="0 0 400 600" aria-hidden="true">
+        <path d="M34 600 L118 600 L372 52 L360 44 Z" fill="#E30713"></path>
+      </svg>
+      <div class="container-page relative flex flex-col gap-8 py-16 sm:py-20 lg:flex-row lg:items-center lg:justify-between">
+        <div class="max-w-2xl" data-reveal>
+          <h2 class="display text-[2.1rem] sm:text-5xl">Une place dans le prochain groupe ?</h2>
+          <p class="mt-4 text-lg text-white/85">
+            Les groupes sont limités à 8 élèves. Écrivez-nous : on vous donne les dates, le tarif et on planifie votre test de positionnement.
+          </p>
+        </div>
+        <a href={signup} target="_blank" rel="noopener" class="btn shrink-0 bg-white text-blue hover:bg-paper" data-reveal>
+          <Icon name="lucide:message-circle" class="size-5" />
+          Réserver ma place sur WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <Faq items={tcfFaq} />
+  <FinalCta />
+</BaseLayout>

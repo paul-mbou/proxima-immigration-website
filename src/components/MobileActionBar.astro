@@ -1,0 +1,40 @@
+---
+import { Icon } from 'astro-icon/components';
+import { whatsappLink } from '@/data/site';
+---
+
+<div
+  class="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-paper/90 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-xl sm:hidden"
+  transition:persist
+>
+  <div class="grid grid-cols-[auto_1fr] gap-3">
+    <a
+      href={whatsappLink('Bonjour Proxima, je souhaite des informations sur mon projet d’immigration au Canada.')}
+      target="_blank"
+      rel="noopener"
+      class="btn-whatsapp !min-h-12 !gap-2 !px-4 text-[0.95rem]"
+      aria-label="Écrire sur WhatsApp"
+    >
+      <Icon name="lucide:message-circle" class="size-5" />
+      WhatsApp
+    </a>
+    <a href="/#evaluation" class="btn-primary !min-h-12 !px-4 text-[0.95rem] whitespace-nowrap">
+      Évaluation gratuite
+    </a>
+  </div>
+</div>
+
+<a
+  href={whatsappLink('Bonjour Proxima, je souhaite des informations sur mon projet d’immigration au Canada.')}
+  target="_blank"
+  rel="noopener"
+  class="group fixed right-6 bottom-6 z-40 hidden items-center gap-3 rounded-full bg-[#1f9d55] py-3 pr-5 pl-3 text-white shadow-[0_16px_40px_-12px_rgb(31_157_85/0.7)] transition-transform duration-300 hover:-translate-y-0.5 sm:inline-flex"
+  aria-label="Écrire sur WhatsApp"
+  transition:persist
+>
+  <span class="relative flex size-9 items-center justify-center rounded-full bg-white/15">
+    <span class="absolute inset-0 animate-ping rounded-full bg-white/20 [animation-duration:2.5s]"></span>
+    <Icon name="lucide:message-circle" class="size-5" />
+  </span>
+  <span class="text-sm font-semibold">Une question ? <span class="font-normal text-white/85">On répond vite</span></span>
+</a>

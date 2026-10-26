@@ -1,0 +1,25 @@
+import { BriefcaseBusiness, GraduationCap, House, Languages, Users, type LucideIcon } from 'lucide-react';
+
+export const serviceIcons: Record<string, LucideIcon> = {
+  house: House,
+  'graduation-cap': GraduationCap,
+  'briefcase-business': BriefcaseBusiness,
+  users: Users,
+  languages: Languages,
+};
+
+export const PLANE_PATH =
+  'M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z';
+
+export const PROGRAMME_EVENT = 'proxima:programme';
+
+declare global {
+  interface Window {
+    __proximaProgramme?: string;
+  }
+}
+
+export function pickProgramme(slug: string) {
+  window.__proximaProgramme = slug;
+  window.dispatchEvent(new CustomEvent(PROGRAMME_EVENT, { detail: slug }));
+}

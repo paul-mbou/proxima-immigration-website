@@ -1,0 +1,90 @@
+---
+import { Icon } from 'astro-icon/components';
+import Logo from './Logo.astro';
+import { contact, services, whatsappLink } from '@/data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="relative overflow-hidden bg-night text-white/80">
+  <svg
+    class="pointer-events-none absolute -right-24 -bottom-10 h-[130%] w-auto opacity-[0.07]"
+    viewBox="0 0 400 600"
+    fill="none"
+    aria-hidden="true"
+  >
+    <path d="M40 600 L330 60" stroke="#E30713" stroke-width="46" stroke-linecap="round" />
+  </svg>
+
+  <div class="container-page relative pt-20 pb-10">
+    <div class="grid gap-14 sm:grid-cols-2 lg:grid-cols-[1.2fr_0.9fr_0.9fr_1.5fr] lg:gap-10">
+      <div class="space-y-6">
+        <Logo variant="white" class="h-14" />
+        <p class="max-w-xs text-white/70">{contact.tagline}<br />Cabinet de conseil en immigration Canada, à Douala.</p>
+        <a
+          href={whatsappLink('Bonjour Proxima, je souhaite être accompagné(e) pour mon projet Canada.')}
+          target="_blank"
+          rel="noopener"
+          class="btn-whatsapp !min-h-12 text-[0.95rem]"
+        >
+          <Icon name="lucide:message-circle" class="size-5" /> Écrire sur WhatsApp
+        </a>
+      </div>
+
+      <div>
+        <h2 class="eyebrow mb-5 text-sky">Expertises</h2>
+        <ul class="space-y-3">
+          {
+            services.map((s) => (
+              <li>
+                <a href={`/expertises#${s.slug}`} class="link-underline hover:text-white">
+                  {s.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="eyebrow mb-5 text-sky">Cabinet</h2>
+        <ul class="space-y-3">
+          <li><a href="/a-propos" class="link-underline hover:text-white">À propos</a></li>
+          <li><a href="/tcf-tef#convertisseur" class="link-underline hover:text-white">Convertisseur TCF → NCLC</a></li>
+          <li><a href="/contact" class="link-underline hover:text-white">Contact</a></li>
+          <li><a href="/mentions-legales" class="link-underline hover:text-white">Mentions légales</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="eyebrow mb-5 text-sky">Bureau</h2>
+        <ul class="space-y-4">
+          <li class="flex gap-3">
+            <Icon name="lucide:map-pin" class="mt-0.5 size-5 shrink-0 text-red" />
+            <span>{contact.city} · {contact.district}<br />{contact.country}</span>
+          </li>
+          <li class="flex gap-3">
+            <Icon name="lucide:message-circle" class="mt-0.5 size-5 shrink-0 text-red" />
+            <a href={whatsappLink()} target="_blank" rel="noopener" class="hover:text-white">WhatsApp {contact.whatsapp}</a>
+          </li>
+          <li class="flex gap-3">
+            <Icon name="lucide:phone" class="mt-0.5 size-5 shrink-0 text-red" />
+            <span class="flex flex-col">
+              <a href={contact.phoneCameroonHref} class="hover:text-white">{contact.phoneCameroon}</a>
+              <a href={contact.phoneCanadaHref} class="hover:text-white">{contact.phoneCanada}</a>
+            </span>
+          </li>
+          <li class="flex gap-3">
+            <Icon name="lucide:mail" class="mt-0.5 size-5 shrink-0 text-red" />
+            <a href={`mailto:${contact.email}`} class="text-[0.95rem] [overflow-wrap:anywhere] hover:text-white">{contact.email}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-16 flex flex-col gap-3 border-t border-white/10 pt-8 text-sm text-white/50 sm:flex-row sm:items-center sm:justify-between">
+      <p>© {year} {contact.company} · Tous droits réservés</p>
+      <p class="font-mono text-xs tracking-[0.16em] uppercase">DLA <span class="text-red">✈</span> CANADA</p>
+    </div>
+  </div>
+</footer>

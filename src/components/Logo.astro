@@ -1,0 +1,22 @@
+---
+import { Image } from 'astro:assets';
+import logo from '@/assets/brand/proxima-logo.png';
+import logoWhite from '@/assets/brand/proxima-logo-white.png';
+
+interface Props {
+  variant?: 'color' | 'white';
+  class?: string;
+}
+
+const { variant = 'color', class: className = '' } = Astro.props;
+---
+
+<a href="/" class:list={['inline-flex shrink-0 items-center', className]} aria-label="Proxima SARL — accueil">
+  <Image
+    src={variant === 'white' ? logoWhite : logo}
+    alt="Proxima SARL"
+    width={240}
+    class="h-full w-auto"
+    loading="eager"
+  />
+</a>

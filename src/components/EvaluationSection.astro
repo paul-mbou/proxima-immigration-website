@@ -1,0 +1,47 @@
+---
+import { Icon } from 'astro-icon/components';
+import SectionHeading from './SectionHeading.astro';
+import EvaluationForm from './react/EvaluationForm';
+import { contact, services, studyLevels } from '@/data/site';
+
+const programmes = services.map((s) => ({ slug: s.slug, label: s.label }));
+const promises = [
+  { icon: 'lucide:user-round-search', title: 'Un vrai conseiller lit votre profil', text: 'Pas de robot : une personne de notre équipe à Douala.' },
+  { icon: 'lucide:clock-3', title: 'Réponse sous 24 h', text: 'Sur WhatsApp, avec le programme qui vous correspond.' },
+  { icon: 'lucide:shield-check', title: 'Gratuit, sans engagement', text: 'Vous décidez ensuite, devis détaillé en main.' },
+];
+---
+
+<section class="section relative overflow-hidden" id="evaluation">
+  <div class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-full bg-[linear-gradient(180deg,var(--color-blue-mist),transparent_60%)]" aria-hidden="true"></div>
+  <div class="container-page grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+    <div>
+      <SectionHeading
+        eyebrow="Évaluation gratuite"
+        title="2 minutes pour savoir <span class='text-blue'>par où passer.</span>"
+        lead="Remplissez ces 5 champs : votre demande s’ouvre dans WhatsApp, déjà rédigée. Vous n’avez qu’à l’envoyer."
+      />
+      <ul class="mt-10 space-y-6">
+        {
+          promises.map((p, i) => (
+            <li class="flex gap-4" data-reveal style={`--reveal-delay:${120 + i * 90}ms`}>
+              <span class="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-surface text-blue ring-1 ring-line">
+                <Icon name={p.icon} class="size-6" />
+              </span>
+              <span>
+                <span class="block font-semibold">{p.title}</span>
+                <span class="text-ink-soft">{p.text}</span>
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="mt-10 text-sm text-ink-mute" data-reveal>
+        Vous préférez appeler ? <a href={contact.phoneCameroonHref} class="font-semibold text-ink underline decoration-red decoration-2 underline-offset-4">{contact.phoneCameroon}</a>
+      </p>
+    </div>
+    <div data-reveal style="--reveal-delay:150ms">
+      <EvaluationForm client:load programmes={programmes} levels={studyLevels} whatsappNumber={contact.whatsappNumber} />
+    </div>
+  </div>
+</section>

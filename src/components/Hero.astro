@@ -1,0 +1,170 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import heroTraveler from '@/assets/images/hero-traveler.jpg';
+import { whatsappLink } from '@/data/site';
+
+const planePath =
+  'M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z';
+---
+
+<section class="relative overflow-hidden pt-28 pb-16 sm:pt-36 lg:flex lg:min-h-[100svh] lg:items-center lg:pt-24 lg:pb-12">
+  <div
+    class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_50%_at_85%_30%,var(--color-blue-mist),transparent_70%)]"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="container-page grid items-center gap-14 lg:grid-cols-12 lg:gap-8">
+    <div class="lg:col-span-7 lg:pr-6">
+      <p class="eyebrow rise flex items-center gap-2.5 text-blue" style="--d:80ms">
+        <span class="size-2 rounded-full bg-red"></span>
+        Cabinet d'immigration<span class="hidden sm:inline"> Canada</span> · Douala
+      </p>
+
+      <h1 class="display rise mt-6 text-[2.55rem] text-ink sm:text-6xl lg:text-[4rem] xl:text-[4.6rem]" style="--d:160ms">
+        Partez au Canada avec un dossier <span class="text-blue">solide.</span>
+      </h1>
+
+      <p class="rise mt-7 max-w-xl text-lg leading-relaxed text-ink-soft sm:text-xl" style="--d:260ms">
+        Résidence permanente, études, travail, famille ou préparation TCF · TEF : nos conseillers montent votre
+        dossier avec vous, de l'évaluation gratuite jusqu'à la réponse d'IRCC.
+      </p>
+
+      <div class="rise mt-9 flex flex-col gap-3 sm:flex-row sm:items-center" style="--d:360ms">
+        <a href="#evaluation" class="btn-primary text-[1.02rem]">
+          Évaluer mon profil gratuitement
+          <Icon name="lucide:arrow-up-right" class="btn-arrow size-5" />
+        </a>
+        <a
+          href={whatsappLink('Bonjour Proxima, je souhaite parler de mon projet d’immigration au Canada.')}
+          target="_blank"
+          rel="noopener"
+          class="btn-ghost"
+        >
+          <Icon name="lucide:message-circle" class="size-5 text-[#1f9d55]" />
+          Parler à un conseiller
+        </a>
+      </div>
+
+      <ul class="rise mt-8 flex flex-wrap gap-x-6 gap-y-2 text-[0.95rem] text-ink-soft" style="--d:460ms">
+        {
+          ['Évaluation gratuite', 'Réponse sous 24 h', 'Contrat signé, zéro frais caché'].map((item) => (
+            <li class="flex items-center gap-2">
+              <Icon name="lucide:circle-check" class="size-[1.15rem] text-blue" />
+              {item}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="relative mx-auto w-full max-w-md lg:col-span-5 lg:max-w-none">
+      <div class="trail pointer-events-none absolute -top-[14%] -right-[6%] -bottom-[10%] left-[8%]" aria-hidden="true">
+        <svg class="size-full" viewBox="0 0 400 600" preserveAspectRatio="none">
+          <path d="M34 600 L118 600 L372 52 L360 44 Z" fill="var(--color-red)"></path>
+        </svg>
+      </div>
+
+      <div class="rise relative z-10 overflow-hidden rounded-[2.25rem] bg-blue-mist shadow-[0_40px_80px_-30px_rgb(10_31_51/0.45)]" style="--d:300ms">
+        <Image
+          src={heroTraveler}
+          alt="Une jeune Camerounaise rit dans un aéroport, passeport et carte d'embarquement en main"
+          widths={[480, 720, 960]}
+          sizes="(min-width: 1024px) 40vw, 90vw"
+          class="aspect-[4/5] w-full object-cover object-top"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+
+      <svg
+        class="plane pointer-events-none absolute z-20 size-14 sm:size-16"
+        style="top: calc(-5.5% - 1.75rem); right: calc(1% - 1.75rem);"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <path d={planePath} fill="var(--color-red)" transform="rotate(27 12 12)"></path>
+      </svg>
+
+      <div
+        class="ticket rise absolute -bottom-8 -left-3 z-20 w-[min(21rem,88%)] rounded-2xl bg-surface p-5 shadow-[0_24px_60px_-20px_rgb(10_31_51/0.45)] sm:-left-10"
+        style="--d:900ms"
+      >
+        <div class="flex items-center justify-between">
+          <span class="eyebrow text-ink-mute">Carte d'embarquement</span>
+          <span class="font-mono text-[0.7rem] font-semibold text-blue">PX 2026</span>
+        </div>
+        <div class="mt-4 flex items-center gap-3">
+          <div>
+            <p class="font-mono text-3xl font-bold tracking-tight text-ink">DLA</p>
+            <p class="text-xs text-ink-mute">Douala</p>
+          </div>
+          <div class="relative flex flex-1 items-center">
+            <span class="h-px flex-1 border-t-2 border-dashed border-line"></span>
+            <svg viewBox="0 0 24 24" class="mx-1 size-5 shrink-0" aria-hidden="true">
+              <path d={planePath} fill="var(--color-red)" transform="rotate(90 12 12)"></path>
+            </svg>
+            <span class="h-px flex-1 border-t-2 border-dashed border-line"></span>
+          </div>
+          <div class="text-right">
+            <p class="font-mono text-3xl font-bold tracking-tight text-ink">YUL</p>
+            <p class="text-xs text-ink-mute">Montréal</p>
+          </div>
+        </div>
+        <div class="mt-4 flex items-end justify-between border-t border-dashed border-line pt-3">
+          <div>
+            <p class="eyebrow !text-[0.62rem] text-ink-mute">Passager</p>
+            <p class="font-semibold">Vous</p>
+          </div>
+          <div class="text-right">
+            <p class="eyebrow !text-[0.62rem] text-ink-mute">Statut</p>
+            <p class="flex items-center gap-2 font-semibold text-blue">
+              <span class="relative flex size-2">
+                <span class="absolute inset-0 animate-ping rounded-full bg-blue/50"></span>
+                <span class="relative size-2 rounded-full bg-blue"></span>
+              </span>
+              Dossier en préparation
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .trail {
+    clip-path: inset(100% 0 0 0);
+    animation: takeoff 1.3s var(--ease-flight) 0.45s forwards;
+  }
+  .plane {
+    opacity: 0;
+    animation:
+      plane-in 0.8s var(--ease-flight) 1.35s forwards,
+      float 5s ease-in-out 2.2s infinite;
+  }
+  @keyframes takeoff {
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+  @keyframes plane-in {
+    from {
+      opacity: 0;
+      transform: translate(-28px, 44px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .trail {
+      clip-path: none;
+    }
+    .plane {
+      opacity: 1;
+    }
+  }
+</style>

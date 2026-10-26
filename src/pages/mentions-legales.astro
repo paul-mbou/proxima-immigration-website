@@ -1,0 +1,96 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import { contact } from '@/data/site';
+import { photoCredits } from '@/data/images';
+---
+
+<BaseLayout title="Mentions légales" description="Mentions légales du site de Proxima SARL, cabinet de conseil en immigration Canada à Douala.">
+  <PageHero
+    eyebrow="Informations légales"
+    title="Mentions légales"
+    lead="Les informations ci-dessous identifient l’éditeur du site et précisent l’usage fait de vos données."
+  />
+
+  <section class="pb-28">
+    <div class="container-page">
+      <div class="legal max-w-3xl space-y-10 text-[1.05rem] leading-relaxed text-ink-soft">
+        <div>
+          <h2>Éditeur du site</h2>
+          <p>
+            {contact.company}, société à responsabilité limitée de droit camerounais.<br />
+            Siège : {contact.district}, {contact.city}, {contact.country}.<br />
+            RCCM : <span class="todo">à compléter</span> · NIU : <span class="todo">à compléter</span><br />
+            Téléphone : {contact.phoneCameroon} · E-mail : {contact.email}
+          </p>
+        </div>
+        <div>
+          <h2>Hébergement</h2>
+          <p>Hébergeur : <span class="todo">à compléter (nom, adresse, contact)</span></p>
+        </div>
+        <div>
+          <h2>Nature des informations</h2>
+          <p>
+            Les contenus de ce site sont fournis à titre informatif. Les délais, seuils et barèmes cités (dont l’équivalence TCF → NCLC)
+            sont indicatifs et peuvent évoluer : seules les informations publiées par Immigration, Réfugiés et Citoyenneté Canada (IRCC)
+            font foi. Proxima SARL n’est pas affiliée au gouvernement du Canada. Aucun cabinet ne peut garantir l’obtention d’un visa.
+          </p>
+        </div>
+        <div>
+          <h2>Données personnelles</h2>
+          <p>
+            Le formulaire d’évaluation ne stocke aucune donnée sur ce site : il prépare un message que vous envoyez vous-même à Proxima
+            sur WhatsApp. Les informations reçues servent uniquement à répondre à votre demande. Vous pouvez demander leur suppression à
+            tout moment à {contact.email}.
+          </p>
+        </div>
+        <div>
+          <h2>Propriété intellectuelle</h2>
+          <p>
+            Le logo et les textes de ce site sont la propriété de {contact.company}. Toute reproduction sans autorisation est
+            interdite. Les photographies d’illustration représentent des scènes types et non des clients réels.
+          </p>
+        </div>
+        <div>
+          <h2>Crédits photos</h2>
+          <p>Photographies libres de droits issues de <a href="https://www.pexels.com/fr-fr/license/" target="_blank" rel="noopener">Pexels</a> :</p>
+          <ul class="mt-3 list-disc space-y-1 pl-5">
+            {
+              photoCredits.map((c) => (
+                <li>
+                  {c.subject} :{' '}
+                  <a href={c.url} target="_blank" rel="noopener">
+                    {c.author}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal h2 {
+    font-stretch: 125%;
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--color-ink);
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+  .legal a {
+    color: var(--color-blue);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .todo {
+    background: #fff4d6;
+    color: #7a5600;
+    border-radius: 0.375rem;
+    padding: 0.05rem 0.4rem;
+    font-size: 0.92em;
+  }
+</style>

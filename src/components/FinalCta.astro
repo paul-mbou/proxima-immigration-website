@@ -1,0 +1,45 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import friends from '@/assets/images/friends-coffee.jpg';
+import { whatsappLink } from '@/data/site';
+---
+
+<section class="px-3 pb-3 sm:px-5 sm:pb-5">
+  <div class="relative isolate overflow-hidden rounded-[2.25rem] bg-night">
+    <Image
+      src={friends}
+      alt="Deux amies en écharpe rient, un café à la main, lors d’une promenade d’automne en ville"
+      widths={[640, 1024, 1600]}
+      sizes="100vw"
+      class="absolute inset-0 -z-10 size-full object-cover object-[70%_center]"
+    />
+    <div class="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgb(7_26_44/0.92)_0%,rgb(7_26_44/0.7)_45%,rgb(7_26_44/0.1)_80%)]"></div>
+
+    <div class="container-page py-24 sm:py-32">
+      <div class="max-w-xl" data-reveal>
+        <p class="eyebrow flex items-center gap-2.5 text-sky"><span class="h-px w-6 bg-red"></span>Prochain départ</p>
+        <h2 class="display mt-5 text-[2.6rem] text-white sm:text-6xl">Votre Canada commence ici.</h2>
+        <p class="mt-6 text-lg leading-relaxed text-white/80">
+          Évaluation gratuite, contrat signé, cabinet SARL enregistré. Dites-nous où vous en êtes, on vous dit honnêtement
+          par où passer.
+        </p>
+        <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+          <a href="/#evaluation" class="btn-primary">
+            Évaluer mon profil
+            <Icon name="lucide:arrow-up-right" class="btn-arrow size-5" />
+          </a>
+          <a
+            href={whatsappLink('Bonjour Proxima, je suis prêt(e) à démarrer mon projet Canada.')}
+            target="_blank"
+            rel="noopener"
+            class="btn border border-white/25 text-white hover:bg-white/10"
+          >
+            <Icon name="lucide:message-circle" class="size-5" />
+            Écrire sur WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

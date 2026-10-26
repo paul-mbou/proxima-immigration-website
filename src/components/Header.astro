@@ -1,0 +1,148 @@
+---
+import { Icon } from 'astro-icon/components';
+import Logo from './Logo.astro';
+import { nav, contact, whatsappLink } from '@/data/site';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
+---
+
+<header
+  id="site-header"
+  class="fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-500 data-[scrolled=true]:bg-paper/85 data-[scrolled=true]:shadow-[0_1px_0_var(--color-line)] data-[scrolled=true]:backdrop-blur-xl"
+  transition:persist="site-header"
+>
+  <div class="container-page flex h-[4.5rem] items-center gap-6 sm:h-20">
+    <Logo class="h-11 sm:h-12" />
+
+    <nav aria-label="Navigation principale" class="ml-auto hidden lg:block">
+      <ul class="flex items-center gap-1">
+        {
+          nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                data-nav-link
+                aria-current={isActive(item.href) ? 'page' : undefined}
+                class="relative rounded-full px-4 py-2.5 text-[0.95rem] font-medium text-ink-soft transition-colors hover:text-ink aria-[current=page]:text-ink"
+              >
+                {item.label}
+                <span class="nav-dot absolute bottom-1 left-1/2 size-1 -translate-x-1/2 rounded-full bg-red opacity-0 transition-opacity" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="ml-auto flex items-center gap-2 lg:ml-2">
+      <a
+        href={whatsappLink('Bonjour Proxima, je souhaite des informations sur mon projet d’immigration au Canada.')}
+        target="_blank"
+        rel="noopener"
+        class="hidden size-12 items-center justify-center rounded-full text-ink-soft transition-colors hover:bg-blue-mist hover:text-blue sm:inline-flex"
+        aria-label={`Écrire sur WhatsApp au ${contact.whatsapp}`}
+      >
+        <Icon name="lucide:message-circle" class="size-5" />
+      </a>
+      <a href="/#evaluation" class="btn-primary hidden !min-h-11 !px-5 text-[0.92rem] sm:inline-flex">
+        Évaluation gratuite
+      </a>
+      <button
+        type="button"
+        id="menu-toggle"
+        class="inline-flex size-12 items-center justify-center rounded-full text-ink transition-colors hover:bg-blue-mist lg:hidden"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Ouvrir le menu"
+      >
+        <Icon name="lucide:menu" class="size-6" data-icon-open />
+        <Icon name="lucide:x" class="hidden size-6" data-icon-close />
+      </button>
+    </div>
+  </div>
+</header>
+
+<div
+  id="mobile-menu"
+  class="invisible fixed inset-0 z-40 bg-paper pt-[4.5rem] opacity-0 transition-[opacity,visibility] duration-300 data-[open=true]:visible data-[open=true]:opacity-100 sm:pt-20 lg:hidden"
+  data-open="false"
+  transition:persist="mobile-menu"
+>
+    <nav aria-label="Navigation mobile" class="container-page flex h-full flex-col pt-6 pb-28">
+      <ul class="flex flex-col">
+        <li>
+          <a href="/" class="display flex items-center justify-between border-b border-line py-5 text-3xl">
+            Accueil <Icon name="lucide:arrow-up-right" class="size-6 text-red" />
+          </a>
+        </li>
+        {
+          nav.map((item) => (
+            <li>
+              <a href={item.href} class="display flex items-center justify-between border-b border-line py-5 text-3xl">
+                {item.label} <Icon name="lucide:arrow-up-right" class="size-6 text-red" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="mt-auto space-y-3">
+        <p class="eyebrow text-ink-mute">Bureau · {contact.city}, {contact.district}</p>
+        <a href={contact.phoneCameroonHref} class="block text-lg font-semibold">{contact.phoneCameroon}</a>
+        <a href={`mailto:${contact.email}`} class="block text-ink-soft">{contact.email}</a>
+      </div>
+    </nav>
+</div>
+
+<style>
+  [data-nav-link][aria-current='page'] .nav-dot {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  function initHeader() {
+    const header = document.getElementById('site-header');
+    const toggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('mobile-menu');
+    if (!header || !toggle || !menu) return;
+
+    const onScroll = () => {
+      header.dataset.scrolled = String(window.scrollY > 12 || menu.dataset.open === 'true');
+    };
+    onScroll();
+
+    const setOpen = (open: boolean) => {
+      menu.dataset.open = String(open);
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+      toggle.querySelector('[data-icon-open]')?.classList.toggle('hidden', open);
+      toggle.querySelector('[data-icon-close]')?.classList.toggle('hidden', !open);
+      document.documentElement.style.overflow = open ? 'hidden' : '';
+      onScroll();
+    };
+
+    if (!toggle.dataset.bound) {
+      toggle.dataset.bound = 'true';
+      window.addEventListener('scroll', onScroll, { passive: true });
+      toggle.addEventListener('click', () => setOpen(menu.dataset.open !== 'true'));
+      menu.addEventListener('click', (e) => {
+        if ((e.target as HTMLElement).closest('a')) setOpen(false);
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && menu.dataset.open === 'true') setOpen(false);
+      });
+    }
+
+    const path = location.pathname.replace(/\/$/, '') || '/';
+    header.querySelectorAll<HTMLAnchorElement>('[data-nav-link]').forEach((a) => {
+      const href = a.getAttribute('href') ?? '';
+      if (path === href || path.startsWith(`${href}/`)) a.setAttribute('aria-current', 'page');
+      else a.removeAttribute('aria-current');
+    });
+
+    setOpen(false);
+  }
+
+  document.addEventListener('astro:page-load', initHeader);
+</script>

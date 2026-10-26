@@ -1,0 +1,102 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '@/styles/global.css';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import MobileActionBar from '@/components/MobileActionBar.astro';
+import { contact } from '@/data/site';
+import ogImage from '@/assets/images/hero-traveler.jpg';
+import { getImage } from 'astro:assets';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const fullTitle = title.includes('Proxima') ? title : `${title} · Proxima SARL`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const og = await getImage({ src: ogImage, width: 1200, format: 'jpg' });
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: contact.company,
+  description: 'Cabinet de conseil en immigration Canada à Douala : résidence permanente, visa étudiant, visa travail, regroupement familial et préparation TCF / TEF.',
+  url: Astro.site?.toString(),
+  email: contact.email,
+  telephone: contact.phoneCameroon,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: contact.city,
+    addressRegion: 'Littoral',
+    streetAddress: contact.district,
+    addressCountry: 'CM',
+  },
+  areaServed: ['CM', 'CA'],
+};
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#0F70B7" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(og.src, Astro.site)} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      document.addEventListener('astro:after-swap', () => document.documentElement.classList.add('js'));
+    </script>
+    <ClientRouter />
+  </head>
+  <body class="min-h-dvh pb-[5.5rem] sm:pb-0">
+    <a
+      href="#contenu"
+      class="fixed top-3 left-3 z-[60] -translate-y-24 rounded-full bg-ink px-5 py-3 text-white transition-transform focus:translate-y-0"
+    >
+      Aller au contenu
+    </a>
+    <Header />
+    <main id="contenu">
+      <slot />
+    </main>
+    <Footer />
+    <MobileActionBar />
+
+    <script>
+      function initReveal() {
+        const els = document.querySelectorAll<HTMLElement>('[data-reveal]:not(.is-in)');
+        if (!('IntersectionObserver' in window)) {
+          els.forEach((el) => el.classList.add('is-in'));
+          return;
+        }
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-in');
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.12 },
+        );
+        els.forEach((el) => io.observe(el));
+      }
+      document.addEventListener('astro:page-load', initReveal);
+    </script>
+  </body>
+</html>

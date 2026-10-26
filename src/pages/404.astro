@@ -1,0 +1,27 @@
+---
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { whatsappLink } from '@/data/site';
+---
+
+<BaseLayout title="Page introuvable" description="Cette page n’existe pas ou a été déplacée.">
+  <section class="flex min-h-[80svh] items-center pt-28 pb-20">
+    <div class="container-page">
+      <p class="font-mono text-sm font-semibold tracking-[0.2em] text-red">VOL 404 · DESTINATION INCONNUE</p>
+      <h1 class="display mt-5 max-w-3xl text-[2.6rem] sm:text-6xl">Cette page a pris un autre vol.</h1>
+      <p class="mt-6 max-w-xl text-lg text-ink-soft">
+        Le lien est peut-être ancien ou mal saisi. Revenez à l’accueil, ou demandez directement à un conseiller.
+      </p>
+      <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+        <a href="/" class="btn-primary">
+          Retour à l’accueil
+          <Icon name="lucide:arrow-up-right" class="btn-arrow size-5" />
+        </a>
+        <a href={whatsappLink('Bonjour Proxima, je cherche une information sur votre site.')} target="_blank" rel="noopener" class="btn-ghost">
+          <Icon name="lucide:message-circle" class="size-5 text-[#1f9d55]" />
+          Écrire sur WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
