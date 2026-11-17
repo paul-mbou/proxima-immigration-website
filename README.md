@@ -3,9 +3,9 @@
 **Marketing site for Proxima SARL, a Canadian immigration practice in Douala.**
 Site vitrine : expertises (résidence, études, travail, famille), préparation TCF / TEF, et prise de contact.
 
-![Proxima](src/assets/images/hero-traveler.jpg)
+![Accueil en ligne](docs/portfolio/home.png)
 
-![Mark](src/assets/brand/proxima-logo-full.png)
+![Contact en ligne](docs/portfolio/contact.png)
 
 **Live:** [proxima-immigration.com](https://proxima-immigration.com)
 
